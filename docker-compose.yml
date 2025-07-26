@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  php:
+    build: .
+    container_name: php_server
+    volumes:
+      - .:/var/www/html
+    expose:
+      - 9000
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_server
+    ports:
+      - "8081:80"
+    volumes:
+      - .:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_server
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: erms
+      MYSQL_USER: erms_user
+      MYSQL_PASSWORD: erms_pass
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
