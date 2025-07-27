@@ -1,4 +1,5 @@
 🚦 FULL REQUEST FLOW: From Browser to Database and Back
+
 🔁 Step 1: User Makes a Request
 
 User enters in browser:
